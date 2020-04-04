@@ -142,11 +142,11 @@ namespace NosCore.GameObject.Providers.QuestProvider
             int? scriptStepId;
             switch (packet.Type)
             {
-                case ScriptType.Dialog:
+                case QuestActionType.Dialog:
                     scriptId = packet.FirstArgument;
                     scriptStepId = packet.SecondArgument;
                     break;
-                case ScriptType.Quest:
+                case QuestActionType.Validate:
                     scriptId = packet.SecondArgument;
                     scriptStepId = packet.ThirdArgument;
                     break;
@@ -156,7 +156,7 @@ namespace NosCore.GameObject.Providers.QuestProvider
 
             if (character.Script?.ScriptId != scriptId
                 || character.Script?.ScriptStepId != scriptStepId
-                || packet.Type != ScriptType.Quest
+                || packet.Type != QuestActionType.Validate
                 || !packet.FirstArgument.HasValue
                 || await AddQuestAsync(character, (short)packet.FirstArgument).ConfigureAwait(false)
                 )
